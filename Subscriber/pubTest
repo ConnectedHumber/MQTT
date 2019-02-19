@@ -1,9 +1,9 @@
 #
-# test suite for AQ MQTT subscriber "TEMP"
+# test suite for AQ MQTT subscriber
 #
 
 
-# ensure extraneous keys in JSON are ignored
+# ensure extraneous keys (TEMP in JSON are ignored
 mosquitto_pub -h localhost -t airquality/data -m '{"TEMP":1,"dev":"brian02","temp":22,"pressure":1024,"humidity":80}'
 
 # ensure an unregisterd dev key "nobody" is rejected
