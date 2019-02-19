@@ -15,3 +15,6 @@ mosquitto_pub -h localhost -t airquality/data -m '{"dev":"brian02","temp":22,"la
 # check malformed JSON - leading and trailing braces only
 mosquitto_pub -h localhost -t airquality/data -m '"dev":""brian02","TEST":"bad JSON no leading {"}'
 mosquitto_pub -h localhost -t airquality/data -m '{"dev":"brian02","TEST":bad JSON no ending }"'
+
+# check timestamps are decoded properly. should go on to store 'temp' even if timestamp isn't decoded
+mosquitto_pub -h localhost -t airquality/data -m '{"dev":"brian02","TEST":"timestamp decoding","timestamp":"Tue Feb 19 2019 21:16:17 GMT+0000","temp":25}'
