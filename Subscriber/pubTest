@@ -1,0 +1,17 @@
+#
+# test suite for AQ MQTT subscriber "TEMP"
+#
+
+
+# ensure extraneous keys in JSON are ignored
+mosquitto_pub -h localhost -t airquality/data -m '{"TEMP":1,"dev":"brian02","temp":22,"pressure":1024,"humidity":80}'
+
+# ensure an unregisterd dev key "nobody" is rejected
+mosquitto_pub -h localhost -t airquality/data -m '{"dev":"nobody","temp":24}'
+
+# ensure lattitude and longitude are stored if supplied
+mosquitto_pub -h localhost -t airquality/data -m '{"dev":"brian02","temp":22,"lat":53.796621,"long":-0.344824}'
+
+# check malformed JSON - leading and trailing braces only
+mosquitto_pub -h localhost -t airquality/data -m '"dev":""brian02","TEST":"bad JSON no leading {"}'
+mosquitto_pub -h localhost -t airquality/data -m '{"dev":"brian02","TEST":bad JSON no ending }"'
