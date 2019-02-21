@@ -31,7 +31,7 @@
 #		removed test for {} characters in on_message()
 #----------------------------------------------------------------------
 
-VERSION="2.15"
+VERSION="2.16"
 
 import paho.mqtt.client as paho
 from dateutil.parser import *
@@ -49,7 +49,7 @@ message_number=0	# for trackinmg log messages for each on_message
 brokerConnected=False
 
 # log settings
-
+logFile="chDataLoad_JSON.log" # RH Missing from settings?
 logging.basicConfig(filename=logFile,format='%(asctime)s %(message)s', level=logging.DEBUG)
 
 
@@ -164,7 +164,7 @@ def process_msg(msg_num,msg):
   
 	if 'timestamp' in payloadJson:
 		
-		dateTimeString = payloadJson['timestamp'].decode("UTF-8")
+		dateTimeString = payloadJson['timestamp']
 		logging.info("process_msg(%s): JSON includes a timestamp %s",msg_num,str(dateTimeString))
 
 		try:
