@@ -28,3 +28,4 @@ dbUser="dbUsername"
 dbPassword="dbPassword"
 dbName="aq_db"
 
+logFile="/var.log/aq_db.log"
