@@ -4,7 +4,7 @@
 #
 #--- Authors: Robin Harris/Brian Norman
 #--- Date: 20th february 2019
-#--- Version: 1_0
+#--- Version: 1_1
 #--- Python Ver: 3.6/2.7
 #
 # This program receives MQTT messages with a JSON payload from a broker. Messages are added to a queue of jobs
@@ -24,7 +24,7 @@
 # See changelog.md for changes
 #----------------------------------------------------------------------
 
-VERSION="1.00"	# used for logging
+VERSION="1.10"	# used for logging
 
 import paho.mqtt.client as paho
 from dateutil.parser import *
