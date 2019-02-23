@@ -407,6 +407,7 @@ if not connectToBroker():
 # and passes them to process_job()
 
 while True:
+	time.sleep(0.1)
 	# anything to do?
 	if not job_queue.empty():
 		# make sure the dabase is alive and well
