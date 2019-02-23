@@ -14,5 +14,11 @@ Configuration information is in settings.py which is imported by this program.
 
 Incoming data is stored to a MariaDb database on Soekris
 
-## 23/02/2019 V1.0 First release
+## 23/02/2019 V1.0 ## 
+First release
+
+## 23/2/2019 V1.1 ## 
+
+Added sleep(0.1) to main loop to reduce cpu usage
+
 
