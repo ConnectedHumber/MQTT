@@ -24,7 +24,7 @@
 # See changelog.md for changes
 #----------------------------------------------------------------------
 
-VERSION="1.10"	# used for logging
+VERSION="1.20"	# used for logging
 
 import paho.mqtt.client as paho
 from dateutil.parser import *
@@ -55,21 +55,7 @@ logging.basicConfig(filename=logFile,format='%(asctime)s %(message)s', level=log
 job_queue=queue.Queue(MAX_JOBS)
 
 
-# JSON keys we process
-allowed_json_value_keys="temp,temperature,pressure,humidity,PM10,PM25"
-
-# GPS position keys
-LATITUDE="lat"
-LONGITUDE="long"
-
-# reading_value_types_id values (fixed values, does not warrant SQL)
-types_id={}
-types_id["humidity"]=1
-types_id["PM10"]=2
-types_id["PM25"]=3
-types_id["pressure"]=4
-types_id["temperature"]=5
-types_id["temp"]=5			# an alias for temperature
+# moved aliases to settings.py
 
 thisScript=os.path.basename(__file__)
 
