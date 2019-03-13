@@ -35,9 +35,22 @@ timestamp
 
 All except "dev" are optional but it is pointless to send no data. The device name must be registered otherwise messages are logged and ignored.
 
-Additional JSON keys not listed are ignored.
+All keys are case sensitive.
 
-Note that the subscriber code sets a 'storedon' timestamp in the database as well as the timestamp included in the payload, if any. 
+Any JSON keys sent which are not listed above are ignored.
+
+## About timestamps
+
+It was agreed that we would standardise on the format YYYY-MM-DDTHH:MM:SS+nnnn
+
+Note that the subscriber code always sets a 'storedon' (date&time received in UTC) timestamp in the database as well as the timestamp included in the payload, if any. The Air-Quality-Map uses the timestamp sent, if present, otherwise it uses the storedon timestamp.
+
+Timestamps sent without a timezone offset are assumed to be UTC +0000.
+
+If the timestamp sent is a future date it is ignored.
+
+The code will actually accept a wide variety of timestamp formats. See the Python dateutil module for further information.
+
 
 ## Message Logging
 
