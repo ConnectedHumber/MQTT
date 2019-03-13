@@ -14,11 +14,24 @@ Configuration information is in settings.py which is imported by this program.
 
 Incoming data is stored to a MariaDb database on Soekris
 
-## 23/02/2019 V1.0 ## 
-First release
+## 23/02/2019 V1.00 ##
+- First release
 
-## 23/2/2019 V1.1 ## 
+## 23/2/2019 V1.10 ##
+- added sleep(0.1) to main loop to reduce cpu usage
 
-Added sleep(0.1) to main loop to reduce cpu usage
+## 25/02/2019 V1.20 ##
 
+- Added altitude - requires extra column reading_altitude in reading_values
+- Added more aliases for altitude,longitude and latitude
+- Moved alias definitions to settings.py
+- Altered return values from getRecordedOn() to simplify the SQL  
 
+## 12/3/2019 V1.30 ##
+
+- fixed problem whereby lat/lon/alt were inserted as zeros instead of NULLs
+- added code to check that timestamps are not future dates - ignored if they are
+
+## 12/3/2019 V1.31 ##
+
+- added code to add UTC to a timestamp if the timezone is missing
