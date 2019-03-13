@@ -3,8 +3,8 @@
 # dbLoader.py
 #
 #--- Authors: Robin Harris/Brian Norman
-#--- Date: 20th february 2019
-#--- Version: 1_1
+#--- Date: 12th March 2019
+#--- Version: 1.30
 #--- Python Ver: 3.6/2.7
 #
 # This program receives MQTT messages with a JSON payload from a broker. Messages are added to a queue of jobs
@@ -24,15 +24,19 @@
 # See changelog.md for changes
 #----------------------------------------------------------------------
 
-VERSION="1.20"	# used for logging
+VERSION="1.31"	# used for logging
+
+import sys
+print("running on python ",sys.version[0])
 
 import paho.mqtt.client as paho
 from dateutil.parser import *
+import pytz
+from datetime import datetime
 import mysql.connector
 import time
 import json
 import logging
-import sys
 import os
 
 if int(sys.version[0])>=3:
@@ -55,7 +59,6 @@ logging.basicConfig(filename=logFile,format='%(asctime)s %(message)s', level=log
 job_queue=queue.Queue(MAX_JOBS)
 
 
-# moved aliases to settings.py
 
 thisScript=os.path.basename(__file__)
 
@@ -130,31 +133,86 @@ def getDeviceId(msg_num):
 		logging.exception("process_msg(%s): Unable to connect to database. Insertion skipped", msg_num);
 		return None
 
+########################################
+#
+# getTimeWithTz(timeString)
+#
+# if timeString does not include timezone information
+# adds a UTC timezone
+#
+
+def getTimeWithTz(msg_num,timeString):
+	try:
+		d=parse(timeString)
+		if d.tzinfo: return d;
+
+		return d.replace(tzinfo=pytz.utc)
+
+	except Exception as e:
+		logging.exception("getTimeWithTz(%s) failed. Timestamp will be ignored.",msg_num)
+		return None
+
 #####################################
 #
-# getRecordedOne()
+# isValidDate(timestamp)
+# checks that timestamp is not in the
+# future
 #
-# if the payload contains a timestamp then return it
+# returns a timestamp string
+# or None (for db insertion)
+#####################################
+
+def isValidDate(msg_num,timestamp):
+
+	logging.info("isValidDate(%s): checking timestamp %s",msg_num,timestamp)
+
+	try:
+		# get the current time and timestamp in YYYY-MM-DDTHH:MM:SS+nnnn format
+		#
+		now = getTimeWithTz(msg_num,datetime.now().strftime("%Y-%m-%dT%H:%M:%S%z"))
+		ts = getTimeWithTz(msg_num,timestamp)
+
+		# is timestamp in the future?
+		if ts>now:
+			logging.info("isFutureDate(%s) : %s is a future date. Ignored.",msg_num,timestamp)
+			return None
+
+		logging.info("isFutureDate(%s) : %s is a valid date.", msg_num, timestamp)
+		# lose the timezone offset
+		return ts.strftime('%Y-%m-%d %H:%M:%S')
+
+	except ValueError:
+
+		logging.info("isFutureDate(%s) : Cannot convert timestamp. Check the format is YYYY-MM-DDThh:mm:ss+nnnn. "
+					 "Ignored", msg_num, timestamp)
+		return None
+
+
+#
+# getRecordedOn()
+#
+# if the payload contains a timestamp then return it otherwise return None
+# to simplify the SQL required
 #
 def getRecordedOn(msg_num):
 	global payloadJson
 
 	if not 'timestamp' in payloadJson:
 		logging.info("getRecordedOn(%s): JSON does not contain a timestamp",msg_num)
-		return None
+		return  None
 
 	dateTimeString = payloadJson['timestamp']
 	logging.info("getRecordedOn(%s): JSON includes a timestamp %s", msg_num, str(dateTimeString))
 
 	try:
 		# recordedONString is a string in the required database format
-		recordedOnObject = parse(dateTimeString)
-		recordedOnString = recordedOnObject.strftime('%Y-%m-%d %H:%M:%S')
+		recordedOnString = isValidDate(msg_num,dateTimeString)
 		logging.info("getRecordedOn(%s): recordedOnString=%s", msg_num, recordedOnString)
 		return recordedOnString
 	except ValueError:
 		logging.exception("process_msg(%s): cannot convert timestamp to datetime object", str(msg_num))
 		return None
+
 ######################################
 #
 # addReadingValues()
@@ -202,6 +260,37 @@ def addReadingValues(msg_num,reading_id):
 
 #####################################
 #
+# getLatLonAlt()
+#
+# returns tuple (lat,lon,alt) as strings which can be passed to
+# the SQL commands NULL is used so that complesx SQL selection is not needed
+#
+def getLatLonAlt(msg_num):
+	global GNSS_Aliases
+
+	latitude=None
+	longitude=None
+	altitude=None
+
+	for k in GNSS_Aliases.keys():
+		if k in payloadJson:
+			if GNSS_Aliases[k]==LONGITUDE:
+				longitude=str(payloadJson[k])
+			elif GNSS_Aliases[k]==LATITUDE:
+				latitude=str(payloadJson[k])
+			elif GNSS_Aliases[k]==ALTITUDE:
+				altitude=str(payloadJson[k])
+
+	if latitude is None or longitude is None or altitude is None:
+		logging.info("getLatLonAlt(%s): Incomplete GNSS data or none. Ignored.",msg_num)
+		return (None,None,None)
+	else:
+		logging.info("getLatLonAlt(%s): Full GNSS data is included", msg_num)
+		return(latitude,longitude,altitude)
+
+
+#####################################
+#
 # process_job()
 #
 # main flow analysing the payload and acting on it
@@ -221,39 +310,16 @@ def process_job(msg_num, payload):
 		logging.error("process_job(%s): Unresolved device_id. Payload skipped")
 		return
 
-	# lat long?
-	if LATITUDE in payloadJson.keys() and LONGITUDE in payloadJson.keys():
-		logging.info("process_job(%s): JSON includes GPS lat/long",msg_num)
-		GPS=True
-	else:
-		logging.info("process_msg(%s): JSON does NOT include GPS lat/long",msg_num)
-		GPS=False
+	# GNNS data? if not (None,None,None) is returned for each
+	(lat,lon,alt)=getLatLonAlt(msg_num)
 
-	recordedOnString=getRecordedOn(msg_num)
+	# timestamp provided? if not None is returned
+	recordedOn=getRecordedOn(msg_num)
 
-	# the correct SQL to use depends on recordedOnString and GPS
-	if recordedOnString is not None:
-		if GPS:
-			sql="INSERT INTO readings (recordedon,device_id,raw_json,reading_latitude,reading_longitude) values (%s,%s,%s,%s,%s)"
-			vals = (recordedOnString,
-					device_id,
-					str(payloadJson),
-					str(payloadJson[LATITUDE]),
-					str(payloadJson[LONGITUDE])
-					)
-		else:
-			sql="INSERT INTO readings (recordedon,device_id,raw_json) values (%s,%s,%s)"
-			vals = (recordedOnString, device_id, str(payloadJson))
-	else:
-		if GPS:
-			sql="INSERT INTO readings (recordedon,device_id,raw_json,reading_latitude,reading_longitude) values (NULL,%s,%s,%s,%s)"
-			vals=(
-				device_id,
-				str(payloadJson),
-				str(payloadJson[LATITUDE]),str(payloadJson[LONGITUDE]))
-		else:
-			sql="INSERT INTO readings (recordedon,device_id,raw_json) values (NULL,%s,%s)"
-			vals=(device_id,str(payloadJson))
+	sql = "INSERT INTO readings (recordedon,device_id,raw_json,reading_latitude,reading_longitude," \
+		  "reading_altitude) values (%s,%s,%s,%s,%s,%s)"
+
+	vals = (recordedOn,device_id, str(payloadJson),lat,lon,alt	)
 
 	readings_id=dbUpdate(msg_num,sql, vals)
 
@@ -393,15 +459,16 @@ if not connectToBroker():
 # and passes them to process_job()
 
 while True:
-	time.sleep(0.1)
 	# anything to do?
 	if not job_queue.empty():
 		# make sure the dabase is alive and well
 		mydb.ping(reconnect=True, attempts=5, delay=1)
+		# TODO add code to check if the connection is really up
 		# retrieve the next job and process it
 		payload=job_queue.get()	# retrieve the next job
 		process_job(message_number,payload)
 		# bump the message number with wrap around
 		message_number=(message_number+1) % MAX_MESSAGE_NUMBER
-
-
+	else:
+		# wait nicely
+		time.sleep(0.1)
