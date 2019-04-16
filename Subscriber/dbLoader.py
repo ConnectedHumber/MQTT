@@ -113,7 +113,7 @@ def getDeviceId(msg_num):
 		device_name=None
 		for key in payloadJson.keys():
 			if ley.lower()=="dev":
-				device_name = payloadJson['dev']
+				device_name = payloadJson[key]
 		if device_name is None:
 			return None
 		
