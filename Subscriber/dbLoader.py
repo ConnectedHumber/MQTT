@@ -3,8 +3,8 @@
 # dbLoader.py
 #
 #--- Authors: Robin Harris/Brian Norman
-#--- Date: 12th March 2019
-#--- Version: 1.30
+#--- Date: 15th April 2019
+#--- Version: 1.31
 #--- Python Ver: 3.6/2.7
 #
 # This program receives MQTT messages with a JSON payload from a broker. Messages are added to a queue of jobs
@@ -109,7 +109,14 @@ def getDeviceId(msg_num):
 	# first get the device_id from the device_name by looking it up in the database
 
 	try:
-		device_name = payloadJson['dev']
+		# case insensitive search for dev key
+		device_name=None
+		for key in payloadJson.keys():
+			if ley.lower()=="dev":
+				device_name = payloadJson['dev']
+		if device_name is None:
+			return None
+		
 		# SQL SELECT to find device_id
 		sql = "SELECT device_id FROM devices WHERE device_name = %s"
 		vals = (device_name,)
