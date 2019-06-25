@@ -4,7 +4,7 @@
 #
 #--- Authors: Robin Harris/Brian Norman
 #--- Date: 15th April 2019
-#--- Version: 1.31
+#--- Version: 1.32
 #--- Python Ver: 3.6/2.7
 #
 # This program receives MQTT messages with a JSON payload from a broker. Messages are added to a queue of jobs
@@ -24,7 +24,7 @@
 # See changelog.md for changes
 #----------------------------------------------------------------------
 
-VERSION="1.31"	# used for logging
+VERSION="1.32"	# used for logging
 
 import sys
 print("running on python ",sys.version[0])
@@ -323,8 +323,8 @@ def process_job(msg_num, payload):
 	# timestamp provided? if not None is returned
 	recordedOn=getRecordedOn(msg_num)
 
-	sql = "INSERT INTO readings (recordedon,device_id,raw_json,reading_latitude,reading_longitude," \
-		  "reading_altitude) values (%s,%s,%s,%s,%s,%s)"
+	sql = "INSERT INTO readings (storedon,recordedon,device_id,raw_json,reading_latitude,reading_longitude," \
+		  "reading_altitude) values (now(),%s,%s,%s,%s,%s,%s)"
 
 	vals = (recordedOn,device_id, str(payloadJson),lat,lon,alt	)
 
