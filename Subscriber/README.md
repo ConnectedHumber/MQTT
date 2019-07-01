@@ -9,7 +9,7 @@ Note passwords and user names have been removed from the code.
 The expected payload is a JSON string similar to this:-
 
 ```
-{"dev":"devname","temp":25.4,"PM25":15.8,"PM10":10.1,"humidity":60.0,"pressure":1024.00,"timestamp":"YYY-MM-DD HH:MM:SS"}
+{"dev":"devname","temp":25.4,"PM25":15.8,"PM10":10.1,"humidity":60.0,"pressure":1024.00,"timestamp":"YYYY-MM-DD HH:MM:SS"}
 ```
 
 ## JSON keys supported ##
