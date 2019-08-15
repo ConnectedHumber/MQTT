@@ -1,3 +1,5 @@
+#!/bin/env python3
+#
 # defraBridge.py
 #
 # version 1.100
@@ -14,12 +16,15 @@ import logging
 
 VERSION="1.10"	# used for logging
 
+lastTimeStampFile="/home/CHAdmin/defraTimestamp.txt"
+
 # log settings
 
 logFile = '/var/log/defraBridge.log'
 logging.basicConfig(filename=logFile, format='%(asctime)s %(message)s', level=logging.DEBUG)
 
-logging.info("Starting DEFRA sensor collector")
+logging.info("###############################")
+logging.info("Starting DEFRA sensor data collector")
 
 # MQTT settings
 mqttBroker = "51.140.15.143"						#'mqtt.connectedhumber.org'
@@ -29,13 +34,13 @@ mqttTopic = "airquality/data"
 
 
 def saveLastTimestamp(timestamp):
-    fp=open("lastTimestamp.txt","w+")    # create if missing, overwrite otherwise
+    fp=open(lastTimeStampFile,"w+")    # create if missing, overwrite otherwise
     fp.write(str(timestamp))
     fp.close()
 
 def getLastTimestamp():
     try:
-        fp = open("lastTimestamp.txt", "r")
+        fp = open(lastTimeStampFile, "r")
         ts=fp.readline()
         fp.close()
         logging.info("Last timestamp was %s",ts)
@@ -85,7 +90,7 @@ json_response = json.loads(req.content.decode("utf-8"))
 
 # fake a negative
 json_response['values'][-1]['value']=-66.66
-print(json_response)
+#print(json_response)
 lastValidEntry=-1
 latestHour = json_response['values'][lastValidEntry]
 while latestHour['value']<0:
@@ -117,8 +122,8 @@ if lastTimestamp is None or (latestTimestamp>lastTimestamp):
     # build a JSON string to send
     sendBuffer =  "{{\"dev\": \"UKA00450\", \"PM25\": {}, \"timestamp\": {}}}".format(PM25, ts)
     logging.info("sendBuffer: %s", sendBuffer)
-    #mqttc.publish(mqttTopic, sendBuffer)
-    #mqttc.loop_stop()
+    mqttc.publish(mqttTopic, sendBuffer)
+    mqttc.loop_stop()
 
 else:
     logging.info("lastTimeStamp stands")
