@@ -29,7 +29,7 @@ else:
 # these will be put into a config file later
 logFile="/var/log/ttnHccBridge.log"
 app_id = 'hccsensortest'
-access_key = 'ttn-account-v2.otr4HPPYg5l_xnGS3BJOHwe1a2uwo-Y8hz83B499ZnM'
+access_key = '<ASK>'
 MAX_JOBS=256    # arbitrary number
 chClientUser="connectedhumber"
 chClientPassword="<password here>"
