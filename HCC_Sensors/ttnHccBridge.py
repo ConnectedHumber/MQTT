@@ -2,14 +2,17 @@
 """
 ttnBridge.py
 
-version: 1.0
+version: 1.1
 author(s): Brian Norman/Robin Harris
-date: 26/7/2019
+date: 28/8/2019
 
 purpose: to receive MQTT messages from TTN and repackage the payload for sending to the Connected Humber broker.
 
 The program uses python queue to add jobs (callback) to be processed and deals with them
 in the main loop.
+
+
+
 
 """
 
