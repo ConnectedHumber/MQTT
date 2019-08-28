@@ -29,7 +29,7 @@ logging.info("Starting DEFRA sensor data collector")
 # MQTT settings
 mqttBroker = "51.140.15.143"						#'mqtt.connectedhumber.org'
 mqttClientUser = "connectedhumber"
-mqttClientPassword = "3fds8gssf6"
+mqttClientPassword = "<ask>"
 mqttTopic = "airquality/data"
 
 
