@@ -6,12 +6,12 @@
 logFile="/var/log/clarityBridge.log"
 lastTimestampFile="/home/CHAdmin/clarityTimestamp.txt"
 
-api_key = 'aIl2B1uFHw5tQsMvg7ykkDToeJOgtX1JZAd1DXwq'
+api_key = '<ASK>'
 base_url="https://clarity-data-api.clarity.io/v1"
 
 mqttBroker = '51.140.15.143'     #'mqtt.connectedhumber.org'
 mqttClientUser = "connectedhumber"
-mqttClientPassword="3fds8gssf6"
+mqttClientPassword="<ASK>"
 mqttTopic = "airquality/data"
 mqttConnectTimeout=20	# only checked on startup
 mqttKeepAlive=60		# client pings server if no messages have been sent in this time period.
