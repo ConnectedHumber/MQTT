@@ -2,7 +2,7 @@
 #
 # defraBridge.py
 #
-# version 1.100
+# version 1.10
 #
 # broker changed for new server
 #
