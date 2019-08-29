@@ -94,7 +94,7 @@ def process_job(jsonPayload):
     global chClient
 
     logging.info("Sending payload %s",jsonPayload)
-    print("Sending payload :",jsonPayload)
+    //print("Sending payload :",jsonPayload)
     (rc,mid)=chClient.publish(chTopic,jsonPayload)
     logging.info("process_job(): publish msg rc=%s mid=%s"%(str(rc),str(mid)))
 
@@ -138,7 +138,7 @@ def connectToCH():
         return False
 
     else:
-        print("connected to broker ok")
+        //print("connected to broker ok")
         logging.info("Connected to mqtt broker")
         return True
 
