@@ -1,7 +1,7 @@
 # setting for the clarityBridge.py
 #
 # these are devices deployed by connexin in the Hull area in 2019
-#
+# to access the API data you nee an api_key from connexin
 #
 
 logFile="/var/log/clarityBridge.log"
