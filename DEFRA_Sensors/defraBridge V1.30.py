@@ -201,7 +201,7 @@ for TS in sorted(timestampList.keys()):
     # build a JSON string to send
     sendBuffer = "{{\"dev\": \"{}\", \"PM25\": {}, \"timestamp\": {}}}".format(DEVICE_NAME,PM25, ts)
     logging.info("sendBuffer: %s", sendBuffer)
-    #mqttc.publish(mqttTopic, sendBuffer)
+    mqttc.publish(mqttTopic, sendBuffer)
 
 # tidy up and wait for next cron run
 saveLastTimestamp(maxTimestamp)
