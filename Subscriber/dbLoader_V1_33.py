@@ -314,7 +314,7 @@ def updateLastSeen(msg_num,device_id,readings_id):
 		# update the devices table
 		lastSeen=r[0]
 		logging.info("updateLastSeen(%s): lastseen=%s",msg_num,lastSeen)
-		SQL="update devices set lastseen=%s where device_id=%s"
+		SQL="update devices set last_seen=%s where device_id=%s"
 		mycursor.execute(SQL,[lastSeen,device_id])
 		mydb.commit()
 		logging.info("updateLastSeen(%s): completed normally",msg_num)
