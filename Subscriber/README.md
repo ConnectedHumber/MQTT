@@ -2,7 +2,7 @@
 
 dbLoader.py subscribes to the connectedhumber MQTT broker listening for messages on the topic airquality/data. When it receives a message it analyses the payload and, possibly,adds records to the database.
 
-The data is presented on an air quality map here: https://aq.connectedhumber.org/app/
+The data is presented on an air quality map here: https://sensors.connectedhumber.org/app/
 
 Note passwords and user names have been removed from the code.
 
