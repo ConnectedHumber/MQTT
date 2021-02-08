@@ -267,7 +267,7 @@ def addReadingValues(msg_num,reading_id):
 		for key, value in payloadJson.items():
 
 			logging.info("addReadingValues(%s): trying to add record to reading_values for key=%s", msg_num, str(key))
-			if not key in allowed_json_value_keys:
+			if not key types_id:
 				logging.info("addReadingValues(%s): Ignoring non-data value key %s found in JSON", msg_num, str(key))
 				continue
 
