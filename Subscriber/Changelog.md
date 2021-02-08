@@ -35,3 +35,9 @@ Incoming data is stored to a MariaDb database on Soekris
 ## 12/3/2019 V1.31 ##
 
 - added code to add UTC to a timestamp if the timezone is missing
+
+## 08/02/2019 V2.00 ##
+- added code to load the data types from the reading_value_types table instead of from settings.py. Chnages to 
+  reading_value_types requires as restart of the dbLoader service
+
+## 
