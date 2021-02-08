@@ -55,7 +55,7 @@ try:
 	mydb= mysql.connector.connect(
 				host=dbHost,
 				user=dbUser,
-				passwd=dbPass,
+				passwd=dbPassword,
 				database=dbName
 			)
 	logging.info("Database connection ok")
