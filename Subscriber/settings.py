@@ -1,7 +1,7 @@
 # settings.py
 #
 # Author: 	Brian Norman
-# Date: 	25rd Feb 2019
+# Date: 	  8th Feb 2021
 #
 # place this file in the same folder as dbLoader.py
 #
