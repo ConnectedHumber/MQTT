@@ -14,16 +14,13 @@
 # connect to an MQTT broker and local database
 #
 
-
-
-
 # MQTT settings
 # if mqttClientUser is set to None authentication is not used
 # but the broker must accept conenctions without it
 
-mqttBroker = 'mqtt.connectedhumber.org'
-mqttClientUser = "mqttClientUser"
-mqttClientPassword = "mqttClientPassword"
+mqttBroker = '<mqttBroker>'                 #replace with your MQTT broker login details
+mqttClientUser = "<mqttClientUser>"
+mqttClientPassword = "<mqttClientPassword>"
 mqttTopic = "airquality/data"
 mqttConnectTimeout=20	# only checked on startup
 mqttKeepAlive=60		# client pings server if no messages have been sent in this time period.
@@ -31,18 +28,12 @@ mqttKeepAlive=60		# client pings server if no messages have been sent in this ti
 
 # database settings
 dbHost="127.0.0.1"
-dbUser="dbUser"
-dbPassword="dbPassword"
+dbUser="<dbUser>"         # replace with your database login info
+dbPassword="<dbPassword>"
 dbName="aq_db"
 
 # LOGGING
-logFile="/var/log/aq_db.log"
-
-
-# JSON keys we process and store data on (seperate from GNSS info
-# these values are placed in reading_values
-allowed_json_value_keys="temp,temperature,pressure,humidity,PM10,PM25"
-
+logFile="/var/log/dbLoader.log"
 
 # GNSS position key aliases
 # case sensitive
@@ -58,16 +49,6 @@ GNSS_Aliases["lat"]=LATITUDE
 GNSS_Aliases["latitude"]=LATITUDE
 GNSS_Aliases["altitude"]=ALTITUDE	# currently not stored
 GNSS_Aliases["alt"]=ALTITUDE
-
-# reading_value_types_id values (fixed values, does not warrant SQL)
-# case sensitive
-types_id={}
-types_id["humidity"]=1
-types_id["PM10"]=2
-types_id["PM25"]=3
-types_id["pressure"]=4
-types_id["temperature"]=5
-types_id["temp"]=5			# an alias for temperature
 
 # misc
 MAX_MESSAGE_NUMBER=9999
