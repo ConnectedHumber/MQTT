@@ -61,8 +61,6 @@ logging.basicConfig(filename=logFile,format='%(asctime)s %(message)s', level=log
 # circular buffer (FIFO) for on_message callbacks to process
 job_queue=queue.Queue(MAX_JOBS)
 
-
-
 thisScript=os.path.basename(__file__)
 
 print("Starting to run ",thisScript,VERSION)		# useful for when the task is first started
@@ -112,7 +110,6 @@ def getTypeIds(msg_num):
 	# first get the device_id from the device_name by looking it up in the database
 
 	try:
-		device_name = payloadJson['dev']
 		# SQL SELECT to find device_id
 		sql = "SELECT short_descr,id FROM reading_value_types"
 
@@ -128,7 +125,7 @@ def getTypeIds(msg_num):
 		types_id["temp"]=types_id["temperature"]
 		types_id["press"]=types_id["pressure"]
 		types_id["hum"]=types_id["humidity"]
-		types_id["PAX_bt"]=types_id["PAX_bluetooth"]
+		types_id["PAX_bt"]=types_id["PAX_Bluetooth"]
 
 		return True
 
@@ -267,7 +264,7 @@ def addReadingValues(msg_num,reading_id):
 		for key, value in payloadJson.items():
 
 			logging.info("addReadingValues(%s): trying to add record to reading_values for key=%s", msg_num, str(key))
-			if not key types_id:
+			if not key in types_id:
 				logging.info("addReadingValues(%s): Ignoring non-data value key %s found in JSON", msg_num, str(key))
 				continue
 
@@ -518,7 +515,7 @@ if not connectToDatabase():
 	mqttc.loop_stop()
 	sys.exit()
 
-getTypeIds()	# if the database changes manually restart the dbLoader service
+getTypeIds(0)	# if the database changes manually restart the dbLoader service
 
 if not connectToBroker():
 	mqttc.loop_stop()
