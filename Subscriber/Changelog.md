@@ -40,4 +40,5 @@ Incoming data is stored to a MariaDb database on Soekris
 - added code to load the data types from the reading_value_types table instead of from settings.py. Chnages to 
   reading_value_types requires as restart of the dbLoader service
 
-## 
+## 04/3/2021 V2.01 ##
+- added to reconnect to the MQTT broker if, for some reason, the broker disconnects. previously we relied on keepalives.
