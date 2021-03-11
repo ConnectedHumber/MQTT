@@ -41,7 +41,10 @@ Incoming data is stored to a MariaDb database on Soekris
   reading_value_types requires as restart of the dbLoader service
 
 ## 04/3/2021 V2.01 ##
-- added code to reconnect to the MQTT broker if, for some reason, the broker disconnects. previously we relied on keepalives.
+- added to reconnect to the MQTT broker if, for some reason, the broker disconnects. previously we relied on keepalives.
 
-## 04/03/2021 V2.02 ##
-- minor changes to check that re-connect succeeded
+## 04/3/2021 V2.02 ##
+- corrected alias for pax_bluetooth
+
+## 11/03/2021 V2.03 ##
+- added PID file creation
