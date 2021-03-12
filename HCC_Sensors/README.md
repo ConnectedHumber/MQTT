@@ -45,7 +45,7 @@ daily
 compress
 maxage 30
 rotate 10
-create 0644 root root
+create 0644 ttnHccBridge ttnHccBridge
 copytruncate
 }
 ```
