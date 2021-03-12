@@ -56,8 +56,9 @@ The code will actually accept a wide variety of timestamp formats. See the Pytho
 
 The code uses the python logging module to record message processing. The host system should add an entry to the /etc/logrotate.d folder. something like:-
 
+file: /etc./logrotate.d/dbLoader
 ```
-<abs path to logfile>{
+/var/log/dbLoader/dbLoader.log{
 missingok
 notifyempty
 size 50k
@@ -65,11 +66,39 @@ daily
 compress
 maxage 30
 rotate 10
-create 0644 root root
+create 0644 dbLoader dbLoader
 copytruncate
 }
 ```
+## systemd file
 
+/etc/systemd/system/dbLoader.service
+```
+[Unit]
+Description=Database loader
+After=network-online.target
+After=mysqld.service
+After=mosquitto-mqtt.service
+
+[Service]
+PermissionsStartOnly=True
+User=dbLoader
+Group=dbLoader
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=dbLoader
+ExecStartPre=-/bin/mkdir /run/dbLoader
+ExecStartPre=-/bin/chown dbLoader:dbLoader /run/dbLoader
+ExecStopPost=-/bin/rm -r /run/dbLoader
+ExecStart=/usr/bin/python3 /home/CHAdmin/dbLoader.py
+Restart=always
+Type=simple
+WorkingDirectory=/home/CHAdmin
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
+```
 
 ## Message Rate
 
