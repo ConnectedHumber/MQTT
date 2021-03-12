@@ -6,8 +6,9 @@ It uses the python ttn library and therefore requires python 3 in order to run.
 
 # systemd service file #
 
-file: /etc/systemd/system/ttnHccBridge.service
 
+file: /etc/systemd/system/ttnHccBridge.service
+```
 [Unit]
 Description=TTN-HCC Bridge
 After=network-online.target
@@ -31,11 +32,11 @@ ExecStart=/usr/bin/python3 /home/CHAdmin/ttnHccBridge.py
 
 [Install]
 WantedBy=multi-user.target
-
+```
 # log rotate #
 
 file: /etc/logrotate.d/ttnHccBridge
-
+```
 /var/log/ttnHccBridge/ttnHccBridge.log{
 missingok
 notifyisempty
@@ -47,3 +48,4 @@ rotate 10
 create 0644 root root
 copytruncate
 }
+```
