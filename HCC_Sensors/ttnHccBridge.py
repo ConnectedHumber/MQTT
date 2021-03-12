@@ -2,27 +2,30 @@
 """
 ttnBridge.py
 
-version: 1.1
+version: 1.2
 author(s): Brian Norman/Robin Harris
-date: 28/8/2019
+date: 13/3/2021
 
 purpose: to receive MQTT messages from TTN and repackage the payload for sending to the Connected Humber broker.
 
 The program uses python queue to add jobs (callback) to be processed and deals with them
 in the main loop.
 
-
-
-
 """
 
-VERSION="1.0"   # for the log file
+VERSION="1.2"   # for the log file
 
 # note: do not import ttn before logging!! it kills the logger
 import time
 import json
 import paho.mqtt.client as paho
 import sys
+import os
+
+# create PID file for monitoring
+pid_file = open("/run/ttnHccBridge/ttnHccBridge.pid", "w")
+pid_file.write(str(os.getpid()))
+pid_file.close()
 
 if int(sys.version[0])>=3:
     import queue
@@ -30,9 +33,9 @@ else:
     import Queue as queue
 
 # these will be put into a config file later
-logFile="/var/log/ttnHccBridge.log"
+logFile="/var/log/ttnHccBridge/ttnHccBridge.log"
 app_id = 'hccsensortest'
-access_key = '<ASK>'
+access_key = 'ttn-account-v2.otr4HPPYg5l_xnGS3BJOHwe1a2uwo-Y8hz83B499ZnM'
 MAX_JOBS=256    # arbitrary number
 chClientUser="connectedhumber"
 chClientPassword="<password here>"
@@ -94,7 +97,7 @@ def process_job(jsonPayload):
     global chClient
 
     logging.info("Sending payload %s",jsonPayload)
-    //print("Sending payload :",jsonPayload)
+    print("Sending payload :",jsonPayload)
     (rc,mid)=chClient.publish(chTopic,jsonPayload)
     logging.info("process_job(): publish msg rc=%s mid=%s"%(str(rc),str(mid)))
 
@@ -138,7 +141,7 @@ def connectToCH():
         return False
 
     else:
-        //print("connected to broker ok")
+        print("connected to broker ok")
         logging.info("Connected to mqtt broker")
         return True
 
