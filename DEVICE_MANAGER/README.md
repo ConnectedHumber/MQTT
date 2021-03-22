@@ -59,4 +59,6 @@ The third line gives a nice warm glow if it says it's running.
 
 # DEVICE CHECKER
 This program runs from cron and checks if a device has been sending data recently.
-If last_seen is 31 days, or more, old then the visible flag is set to 0. If the device later comes back on line visible is set to 1 so that the device can be made visible on the AQ Map. 
+If last_seen is 31 days, or more, old then the visible flag is set to 0. 
+
+The dbLoader program (from V2.04) will set visible=1 as soon as new data is seen thus making the sensor visible on the sensor map again.
