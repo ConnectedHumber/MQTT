@@ -34,8 +34,8 @@ else:
 
 # these will be put into a config file later
 logFile="/var/log/ttnHccBridge/ttnHccBridge.log"
-app_id = 'hccsensortest'
-access_key = 'ttn-account-v2.otr4HPPYg5l_xnGS3BJOHwe1a2uwo-Y8hz83B499ZnM'
+app_id = <ttn_app_id>
+access_key = <ttn_access_key>
 MAX_JOBS=256    # arbitrary number
 chClientUser="connectedhumber"
 chClientPassword="<password here>"
