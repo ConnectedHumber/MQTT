@@ -43,7 +43,7 @@ import json
 import os
 
 # create PID file for monitoring
-pid_file = open("/run/defrabridge/lastrun.pid", "w")
+pid_file = open("/run/defraBridge/lastrun.pid", "w")
 pid_file.write(str(os.getpid()))
 pid_file.close()
 
