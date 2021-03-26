@@ -4,7 +4,7 @@
 # to access the API data you nee an api_key from connexin
 #
 
-logFile="/var/log/clarityBridge.log"
+logFile="/var/log/clarityBridge/clarityBridge.log"
 lastTimestampFile="/home/CHAdmin/clarityTimestamp.txt"
 
 api_key = '<ASK>'
