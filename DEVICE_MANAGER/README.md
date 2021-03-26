@@ -58,7 +58,52 @@ The second line actually starts it.
 The third line gives a nice warm glow if it says it's running.
 
 # DEVICE CHECKER
-This program runs from cron and checks if a device has been sending data recently.
+This program now runs from a systemd timer at midnight every day and checks if a device has been sending data recently.
+
 If last_seen is 31 days, or more, old then the visible flag is set to 0. 
 
-The dbLoader program (from V2.04) will set visible=1 as soon as new data is seen thus making the sensor visible on the sensor map again.
+The dbLoader program (from V2.04) will set visible=1 (devices table) as soon as new data is seen thus quickly making the sensor visible on the sensor map again.
+
+## DevChecker.timer
+
+The timer needs to be enabled to run on boot up and started.
+```
+[Unit]
+Description=devChecker Timer
+StartLimitIntervalSec=0
+
+[Timer]
+OnCalendar=*-*-* 0:0:0
+Unit=DevChecker.service
+
+
+[Install]
+WantedBy=timers.target
+
+```
+## DevChecker.service
+
+The service does not need to be enabled and should only be started from the timer BUT for testing it could be started as it will terminate when its work is done.
+
+```
+[Unit]
+Description=devChecker service
+StartLimitIntervalSec=0
+
+[Service]
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=DevChecker
+PermissionsStartOnly=True
+User=CHAdmin
+Group=CHAdmin
+RuntimeDirectoryMode=755
+ExecStartPre=-/bin/mkdir /run/DevChecker
+ExecStartPre=-/bin/chown CHAdmin:CHadmin /run/DevChecker
+ExecStart=/usr/bin/env python /home/CHAdmin/DevChecker.py
+
+[Install]
+WantedBy=timers.target
+
+
+```
