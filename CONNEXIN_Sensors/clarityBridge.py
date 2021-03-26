@@ -2,10 +2,10 @@
 #
 # clarityBridge.py
 #
-# --- Authors: Robin Harris, Brian Norman
-# --- Date: 10th July 2019
-# --- Version: 0.1
-# --- Python Version: 3.5/2.7
+# --- Authors: Brian Norman
+# --- Date: 26th March 2021
+# --- Version: 1.0
+# --- Python Version: 3
 #
 #
 # Clarity API interface
@@ -13,14 +13,14 @@
 # Collects data from clarity devices and passes to ConnectedHumber MQTT broker
 #
 # Note clarity data is hourly, there are no callbacks so this must run
-# as a periodic cron script once per hour
+# as a periodic cron script or systemd timer once per hour
 #
 # clarity API ref:
 # https://clarity.io/documents/Clarity%20Air%20Monitoring%20Network%20REST%20API%20Documentation.html
 #
 #
 #---------------------------------------------------------------------------------------------------------
-VERSION="0.1"   # used for logging
+VERSION="1.0"   # used for logging
 
 import sys,logging,os
 print("running on python ",sys.version[0])
@@ -33,6 +33,13 @@ from datetime import datetime, timedelta,tzinfo
 from dateutil.parser import *
 import paho.mqtt.client as paho
 import time
+import os
+
+
+# create PID file for monitoring
+pid_file = open("/run/clarityBridge/lastrun.pid", "w")
+pid_file.write(str(os.getpid()))
+pid_file.close()
 
 # log settings and log file header
 logging.basicConfig(filename=logFile,format='%(asctime)s %(message)s', level=logging.DEBUG)
