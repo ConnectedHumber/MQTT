@@ -51,5 +51,5 @@ ExecStartPre=-/bin/chown CHAdmin:CHadmin /run/defraBridge
 ExecStart=/usr/bin/env python3 /home/CHAdmin/defraBridge.py
 
 [Install]
-
+WantedBy=multi-user.target
 ```
