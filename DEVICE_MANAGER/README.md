@@ -1,4 +1,4 @@
-# DEVICE MANAGER
+# DEVICE MANAGER   (PENDING INSTALL)
 
 Code to enable a device to register with the sensors database automatically.
 
@@ -10,7 +10,7 @@ The device id is returned in the reply so that devices can identify replies they
 
 The python scripts detail the message formats.
 
-The code is intended to be run as a system task unser systemctl control. The service info file devManager.service should be located at
+The code is intended to be run as a system task under systemctl control. The service info file devManager.service should be located at
 in /etc/systemd/service.
 
 ```
@@ -23,7 +23,7 @@ Type=simple
 Restart=always
 RestartSec=1
 User=root
-ExecStart=/usr/bin/env python /home/pi/aq_db/devManager.py
+ExecStart=/usr/bin/env python /home/CHAdmin/devManager.py
 
 [Install]
 WantedBy=multi-user.target
@@ -57,7 +57,7 @@ The first line enables the service to be restarted on boot and/or failure. You w
 The second line actually starts it.
 The third line gives a nice warm glow if it says it's running.
 
-# DEVICE CHECKER
+# DEVICE CHECKER (PENDING INSTALL)
 This program now runs from a systemd timer at midnight every day and checks if a device has been sending data recently.
 
 If last_seen is 31 days, or more, old then the visible flag is set to 0. 
