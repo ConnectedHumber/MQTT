@@ -50,6 +50,5 @@ ExecStartPre=-/bin/chown CHAdmin:CHadmin /run/clarityBridge
 ExecStart=/usr/bin/env python3 /home/CHAdmin/clarityBridge.py
 
 [Install]
-WantedBy=timers.target
-
+WantedBy=multi-user.target
 ```
