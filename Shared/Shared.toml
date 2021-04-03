@@ -8,7 +8,7 @@ name="Shared.toml"
     host="<your MQTT host>"
     topic="<your MQTT topic>"
     keepAlive=60
-  	connectTimeout=60
+    connectTimeout=60
 
 [database]
     host="<database host>"  # IP address or URL
