@@ -12,7 +12,7 @@ It uses the python ttn library and therefore requires python 3 in order to run.
 file: /etc/systemd/system/hccSensorBridge.service
 ```
 [Unit]
-Description=HCCSENSOR Bridge
+Description=HCC Sensor Bridge
 After=network-online.target
 After=mosquitto-mqtt.service
 
@@ -22,14 +22,14 @@ User=CHAdmin
 Group=CHAdmin
 StandardOutput=syslog
 StandardError=syslog
-SyslogIdentifier=ttnHccBridge
+SyslogIdentifier=hccSensorBridge
 Restart=always
 Type=simple
 WorkingDirectory=/home/CHAdmin
 RestartSec=3
 ExecStartPre=-/bin/mkdir /run/hccSensorBridge
-ExecStartPre=-/bin/chown ttnHccBridge:ttnHccBridge /run/HccSensorBridge
-ExecStopPost=-/bin/rm -r /run/HccSensorBridge
+ExecStartPre=-/bin/chown CHAdmin:CHAdmin /run/hccSensorBridge
+ExecStopPost=-/bin/rm -r /run/hccSensorBridge
 ExecStart=/usr/bin/python3 /home/CHAdmin/hccSensorBridge.py
 
 [Install]
