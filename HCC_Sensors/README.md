@@ -37,9 +37,9 @@ WantedBy=multi-user.target
 ```
 # log rotate #
 
-file: /etc/logrotate.d/HccSensorBridge
+file: /etc/logrotate.d/hccSensorBridge
 ```
-/var/log/ttnHccBridge/HccSensorBridge.log{
+/var/log/ttnHccBridge/hccSensorBridge.log{
 missingok
 notifyisempty
 size 50k
