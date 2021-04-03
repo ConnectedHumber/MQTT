@@ -1,0 +1,17 @@
+#######################################################
+#
+# hccSensorBridge.toml
+#
+#######################################################
+[debug.settings]
+    debug=true
+    logfile="hccSensorBridge.log"
+    pidfile="lastrun.pid"
+
+[settings]
+    logFile="/var/log/hccSensorBridge/hccSensorBridge.log"
+    pidFile="/run/hccSensorBridge/lastrun.pid"
+    app_id = '<ttn app id>'
+    access_key = '<ttn access key>
+    MAX_JOBS=256    # arbitrary number big enough for all expected TTN callbacks
+
