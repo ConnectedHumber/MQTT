@@ -1,0 +1,50 @@
+###################################################
+#
+# connexinBridge
+#
+###################################################
+name="connexinBridge.toml"
+
+[debug.settings]
+    debug=true
+    logfile="connexinBridge.log"
+    pidfile="lastrun.pid"
+
+[settings]
+    logfile="/var/log/connexinBridge/connexinBridge.log" #folders must exist and be writable by user
+    pidfile="/run/connexinBridge/lastrun.pid"
+	lastTimestampFile="connexinTimestamp.txt"
+	DEVPREFIX="CL-"
+	LOCATION='location'
+	COORDS="coordinates"
+	MEASURES="characteristics"
+	VALUE="value"
+	ID="_id"
+	DEVCODE="deviceCode"
+	TIME="time"
+	LONGITUDE="logitude"
+	LATITUDE="latitude"
+	TIMESTAMP="timestamp"
+
+	api_key = '<connexin api key>'
+	base_url="https://clarity-data-api.clarity.io/v1"
+
+[aliases]
+	# maps the clarity device measurment keys to Connected Humber json keys
+	relHumid="humidity"
+	temperature="temp"
+	pm2_5ConcMass="PM25"
+	pm2_5ConcNum="None"
+	pm1ConMass="None"
+	pm1ConcNum="None"
+	pm10ConcMass="PM10"
+	pm10ConcNum="None"
+	no2Conc="NO2"
+	vocConc="VOC"
+	co2Conc="CO2"
+	time="timestamp"
+	deviceCode="dev"
+	longitude="longitude"
+	latitude="latitude"
+	_id="unused"
+	
