@@ -1,0 +1,36 @@
+###################################################
+#
+# dbLoader
+#
+###################################################
+name="dbLoader.toml"
+
+
+[debug.settings]
+    debug=true
+    logfile="dbLoader.log"
+    pidfile="dbLoader.pid"
+
+[settings]
+    maxJobs=100
+    max_message=9999    # starts again at 0
+    logfile="/var/log/dbLoader/dbLoader.log"
+    pidfile="/run/dbLoader/dbLoader.pid"
+	timezone="UTC"
+
+[reading_value_type_aliases]
+	# abbreviations added to the list from the reading_value_types table
+	temp="temperature"
+	press="pressure"
+	hum="humidity"
+	pax_bt="pax_bluetooth"
+
+
+[gnss_aliases]
+	# alternate names for gnss values
+    longitude="longitude"
+    lon="longitude"
+    latitude="latitude"
+    lat="latitude"
+    altitude="altitude"
+    alt="altitude"
