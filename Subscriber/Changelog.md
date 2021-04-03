@@ -48,3 +48,6 @@ Incoming data is stored to a MariaDb database on Soekris
 
 ## 11/03/2021 V2.03 ##
 - added PID file creation
+
+## 3/4/2021 V3.00 ##
+- now uses TOML configuration file
