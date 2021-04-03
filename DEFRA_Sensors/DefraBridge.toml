@@ -1,0 +1,53 @@
+#####################################################
+#
+# defraBridge
+#
+#####################################################
+
+name="defraBridge.toml"
+
+
+[settings]
+    main_url = "https://uk-air.defra.gov.uk/sos-ukair/api/v1/timeseries/"
+    append_url = "/getData?timespan="
+    never_seen = 14 # days ago to use for never before seen sensors to enable catchup
+    logfile="/var/log/defraBridge/defraBridge.log"
+    pidfile="/run/defraBridge/lastrun.pid"
+
+[debug.settings]
+    debug=false
+    logfile="defraBridge.log"
+    pidfile="lastrun.pid"
+
+[stations.UKA00450-02]
+    latlon=[53.74878, -0.341222]
+    name="Hull Freetown"
+    sensors=[
+    ["2127","SO2"],
+    ["4062","NO"],
+    ["594","PM10"],
+    ["2126","PM25"],
+    ["265","O3"],
+    ["263","NO2"],
+    ["264","NOXasNO2"]
+    ]
+
+[stations.UK5A00600-01]
+    latlon=[53.758971, -0.305749]
+    name="Hull Holderness Road"
+    sensors=[
+    ["4063","NO"],
+    ["268","PM10"],
+    ["269","NO2"],
+    ["270","NOXasNO2"]
+    ]
+
+[stations.UKA00647-01]
+    latlon=[53.619241, -0.213324]
+    name="Immingham Woodlands Avenue"
+    sensors=[
+    ["4608","NO"],
+    ["4609","NO2"],
+    ["4611","NOXasNO2"]
+    ]
+
