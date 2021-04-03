@@ -1,0 +1,17 @@
+#####################################################
+#
+# DevChecker.settings
+#
+#####################################################
+name="DevChecker.toml"
+
+[debug.settings]
+    debug=false
+    logfile="DevChecker.log"
+    pidfile="lastrun.pid"
+
+
+[settings]
+    logfile="/var/log/DevChecker/DevChecker.log"
+    pidfile="/run/DevChecker/lastrun.pid"
+    daysSinceLastSeen=31
