@@ -1,0 +1,17 @@
+# Shared settings for all V3.00 and later programs
+
+name="Shared.toml"
+
+[mqtt]
+    user="<your MQTT user name>"
+    passwd="<your MQTT user password>"
+    host="<your MQTT host>"
+    topic="<your MQTT topic>"
+    keepAlive=60
+  	connectTimeout=60
+
+[database]
+    host="<database host>"  # IP address or URL
+    user = "<database user>"
+    passwd = "<database password>"
+    dbname="<database name>"
