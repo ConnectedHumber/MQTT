@@ -58,7 +58,7 @@ The second line actually starts it.
 The third line gives a nice warm glow if it says it's running.
 
 # DEVICE CHECKER (PENDING INSTALL)
-This program now runs from a systemd timer at midnight every day and checks if a device has been sending data recently.
+This program now runs from a systemd timer at midnight every day and checks if a device has been sending data recently. It also uses its own TOML configuration file.
 
 If last_seen is 31 days, or more, old then the visible flag is set to 0. 
 
