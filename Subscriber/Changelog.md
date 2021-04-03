@@ -4,15 +4,15 @@ This program receives MQTT messages with a JSON payload from a broker. Messages 
 
 The JSON keys MUST include a "dev" which is the unique device identifer.
 
-Other valid keys are: "timestamp", "temp", "humidity", "pressure", "PM10", "PM25","long","lat"
+Valid keys are read from the reading_value_types table when the program first runs. Additions therefore require the dbLoader daemon to be restarted.
 
-There are two possible timestamps. The one sent with the JSON is the date/time when the message was 'recorded on'
-by the device. The second is the date/time the data was 'stored on' (into the database). The Air Quality Map
- https://aq.connectedhumber.org/app/ uses these timestamps to display data.
+Some shorthand aliases are also catered for such as temp=temperature, lat=latitude. The allowed aliases are listed in the TOML config file.
 
-Configuration information is in settings.py which is imported by this program.
+There are two possible timestamps. The one sent with the JSON is the date/time when the message was 'recorded on' by the device. The second is the date/time the data was 'stored on' (into the database). The Air Quality Map (https://aq.connectedhumber.org/app/) uses these timestamps to display data.
 
-Incoming data is stored to a MariaDb database on Soekris
+Configuration information is in dbLoader.toml, which is imported by this program as well as Shared.toml.
+
+Incoming data is stored to a MariaDb database
 
 ## 23/02/2019 V1.00 ##
 - First release
