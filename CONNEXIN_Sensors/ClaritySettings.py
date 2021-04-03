@@ -1,3 +1,4 @@
+
 # setting for the clarityBridge.py
 #
 # these are devices deployed by connexin in the Hull area in 2019
