@@ -2,7 +2,7 @@
 
 The program ttnHccBridge.py has been renamed hccSensorBridge.py to clarify which sensors are being monitored. The program takes readings from TTN and converts them to the JSON strings the Broker needs.
 
-The program loops continuosly processin TTN callbacks for the HCCSENSORs
+The program loops continuosly processing TTN callbacks for the HCCSENSORs
 
 It uses the python ttn library and therefore requires python 3 in order to run.
 
