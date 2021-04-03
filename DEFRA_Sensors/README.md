@@ -32,7 +32,7 @@ Unit=defraBridge.service
 WantedBy=timers.target
 ```
 
-## defrabridge.service
+## defraBridge.service
 ```
 [Unit]
 Description=defraBridge service
