@@ -1,4 +1,4 @@
-# This folder contains python 2.7/3.x subscriber code dbLoader.py
+# This folder contains python 3.x subscriber code dbLoader.py
 
 dbLoader.py subscribes to the connectedhumber MQTT broker listening for messages on the topic airquality/data. When it receives a message it analyses the payload and, possibly,adds records to the database.
 
@@ -66,7 +66,7 @@ daily
 compress
 maxage 30
 rotate 10
-create 0644 dbLoader dbLoader
+create 0644 CHAdmin CHAdmin
 copytruncate
 }
 ```
@@ -82,13 +82,13 @@ After=mosquitto-mqtt.service
 
 [Service]
 PermissionsStartOnly=True
-User=dbLoader
-Group=dbLoader
+User=CHAdmin
+Group=CHAdmin
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=dbLoader
 ExecStartPre=-/bin/mkdir /run/dbLoader
-ExecStartPre=-/bin/chown dbLoader:dbLoader /run/dbLoader
+ExecStartPre=-/bin/chown CHAdmin:CHAdmin /run/dbLoader
 ExecStopPost=-/bin/rm -r /run/dbLoader
 ExecStart=/usr/bin/python3 /home/CHAdmin/dbLoader.py
 Restart=always
@@ -102,8 +102,5 @@ WantedBy=multi-user.target
 
 ## Message Rate
 
-We politely request that messages are not sent to the broker more than once every 6 minutes. This gives us a 10 samples per hour view of the environment.
+We politely request that messages are not sent to the broker more than once every 6 minutes. This gives us a 10 samples per hour view of the environment a given sensor is in.
 
-## NOTE
-
-chDataLoad..py are depracated. They process the JSON within the callback.The newer dbLoader.py uses job queuing and processes the payload in the main thread.
