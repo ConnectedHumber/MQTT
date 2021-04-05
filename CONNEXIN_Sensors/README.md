@@ -47,9 +47,10 @@ PermissionsStartOnly=True
 User=CHAdmin
 Group=CHAdmin
 RuntimeDirectoryMode=755
+WorkingDirectory=/home/CHAdmin
 ExecStartPre=-/bin/mkdir /run/connexinBridge
 ExecStartPre=-/bin/chown CHAdmin:CHadmin /run/connexinBridge
-ExecStart=/usr/bin/env python3 /home/CHAdmin/connexinBridge.py
+ExecStart=/usr/bin/python3 /home/CHAdmin/connexinBridge.py
 
 [Install]
 WantedBy=multi-user.target
