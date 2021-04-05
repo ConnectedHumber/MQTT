@@ -88,7 +88,7 @@ try:
 	dbName = shared["database"]["dbname"]
 
 
-	GNSS_aliases = config["gnss_aliases"]
+	GNSS_Aliases = config["GNSS_Aliases"]
 
 	MAX_JOBS = config["settings"]["max_jobs"]
 	MAX_MESSAGE_NUMBER = config["settings"]["max_message_number"]
