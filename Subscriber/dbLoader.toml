@@ -7,7 +7,7 @@ name="dbLoader.toml"
 
 
 [debug.settings]
-    debug=true
+    debug=false
     logfile="dbLoader.log"
     pidfile="dbLoader.pid"
 
@@ -26,7 +26,7 @@ name="dbLoader.toml"
 	pax_bt="pax_bluetooth"
 
 
-[gnss_aliases]
+[GNSS_Aliases]
 	# alternate names for gnss values
     longitude="longitude"
     lon="longitude"
