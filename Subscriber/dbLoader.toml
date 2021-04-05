@@ -12,13 +12,13 @@ name="dbLoader.toml"
     pidfile="dbLoader.pid"
 
 [settings]
-    maxJobs=100
-    max_message=9999    # starts again at 0
+    max_jobs=100
+    max_message_number=9999    # starts again at 0
     logfile="/var/log/dbLoader/dbLoader.log"
     pidfile="/run/dbLoader/dbLoader.pid"
 	timezone="UTC"
 
-[reading_value_type_aliases]
+[reading_value_types_aliases]
 	# abbreviations added to the list from the reading_value_types table
 	temp="temperature"
 	press="pressure"
