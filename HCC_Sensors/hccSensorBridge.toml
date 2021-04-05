@@ -4,7 +4,7 @@
 #
 #######################################################
 [debug.settings]
-    debug=true
+    debug=false
     logfile="hccSensorBridge.log"
     pidfile="lastrun.pid"
 
