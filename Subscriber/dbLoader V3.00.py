@@ -191,7 +191,7 @@ def getTypeIds(msg_num):
 
 		# add any extra aliases
 		for entry in type_aliases.keys():
-			types_id[entry]=type_aliases[entry]
+			types_id[entry]=types_id[type_aliases[entry]]
 
 		return True
 
