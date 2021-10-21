@@ -9,3 +9,7 @@
 ## V3.00 3/4/2021
 
  - now uses TOML configuration files
+
+## V4.00 21/10/2021
+
+ - changes to work with TTN Stack (V3) MQTT
