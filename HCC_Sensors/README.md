@@ -4,7 +4,9 @@ The program ttnHccBridge.py has been renamed hccSensorBridge.py to clarify which
 
 The program loops continuosly processing TTN callbacks for the HCCSENSORs
 
-It uses the python ttn library and therefore requires python 3 in order to run.
+Prior to V4.00 the code uses the python ttn library. Thereafter it uses MQTT to download uplinks.
+
+Changes to the JSON with the TTN Stack (v3) mean that this code required numerous changes to JSON keys. After December 1st 2021 this will be academic since TTN V2 will no longer be operational. 
 
 # systemd service file #
 
@@ -29,6 +31,8 @@ WorkingDirectory=/home/CHAdmin
 RestartSec=3
 ExecStartPre=-/bin/mkdir /run/hccSensorBridge
 ExecStartPre=-/bin/chown CHAdmin:CHAdmin /run/hccSensorBridge
+ExecStartPre=-/bin/mkdir /var/log//hccSensorBridge
+ExecStartPre=-/bin/chown CHAdmin:CHAdmin /var/log/hccSensorBridge
 ExecStopPost=-/bin/rm -r /run/hccSensorBridge
 ExecStart=/usr/bin/python3 /home/CHAdmin/hccSensorBridge.py
 
@@ -39,7 +43,7 @@ WantedBy=multi-user.target
 
 file: /etc/logrotate.d/hccSensorBridge
 ```
-/var/log/ttnHccBridge/hccSensorBridge.log{
+/var/log/hccSensorBridge/hccSensorBridge.log{
 missingok
 notifyisempty
 size 50k
